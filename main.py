@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File
-from pydantic import BaseModel
-from typing import List
 import uvicorn
 import uuid
+from models import ChatQuery, UploadResponse, ChatResponse
+from services.pdf_service import process_pdf_file
 
 # Create FastAPI instance
 app = FastAPI(
@@ -10,24 +10,6 @@ app = FastAPI(
     description="A RAG-based API for document Q&A",
     version="1.0.0"
 )
-
-# Pydantic Models
-class ChatQuery(BaseModel):
-    """Request model for chat endpoint"""
-    question: str
-    document_id: str
-
-class UploadResponse(BaseModel):
-    """Response model for upload endpoint"""
-    message: str
-    document_id: str
-    chunks_created: int
-
-class ChatResponse(BaseModel):
-    """Response model for chat endpoint"""
-    answer: str
-    sources: List[str]
-    confidence: float
 
 @app.get("/")
 async def root():
@@ -44,17 +26,21 @@ async def upload_document(file: UploadFile = File(...)):
     """
     Upload a PDF document for processing.
     
-    This is a placeholder endpoint that will be implemented in Level 3.
-    For now, it returns a success message with a mock document ID.
+    Level 3 implementation: Extract text from PDF and split into chunks.
     """
-    # Generate a mock document ID
+    # Generate document ID
     document_id = str(uuid.uuid4())
     
-    # Placeholder response - actual PDF processing will be in Level 3
+    # Read uploaded file content
+    content = await file.read()
+    
+    # Process PDF file
+    _, chunks_created = process_pdf_file(content, file.filename)
+    
     return UploadResponse(
-        message="Document uploaded successfully",
+        message="Document uploaded and processed successfully",
         document_id=document_id,
-        chunks_created=0  # Will be implemented in Level 3
+        chunks_created=chunks_created
     )
 
 @app.post("/chat/", response_model=ChatResponse)
