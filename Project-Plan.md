@@ -19,6 +19,61 @@ The Docu-Chat API enables users to:
 - **LLM**: OpenAI API
 - **Data Validation**: Pydantic
 
+## 📋 Project Levels
+
+### ✅ Level 1: Setup & Basic Server (COMPLETED)
+- [x] Set up Python virtual environment
+- [x] Created `requirements.txt` with all dependencies
+- [x] Built basic "Hello World" FastAPI server
+- [x] Added comprehensive `.gitignore` file
+- [x] Resolved git history issues with large files
+
+**Files Created:**
+- `requirements.txt` - Project dependencies
+- `main.py` - Basic FastAPI server
+- `.gitignore` - Git ignore rules
+
+### 🔄 Level 2: API Endpoints & Models (IN PROGRESS)
+- [ ] Create Pydantic models for request/response bodies
+- [ ] Add `POST /upload/` endpoint (placeholder)
+- [ ] Add `POST /chat/` endpoint (placeholder)
+- [ ] Both endpoints return simple JSON success messages
+
+**Planned Models:**
+- `UploadResponse` - Response for document upload
+- `ChatQuery` - Request body for chat endpoint
+- `ChatResponse` - Response for chat endpoint
+
+### ⏳ Level 3: Document Ingestion (Text Processing)
+- [ ] Implement PDF file upload handling in `/upload/` endpoint
+- [ ] Use `pdfplumber` to extract text from uploaded PDFs
+- [ ] Create text splitting logic (500 characters per chunk, 50-character overlap)
+- [ ] Process and validate extracted text
+
+### ⏳ Level 4: Embedding & Storage (Vector DB)
+- [ ] Initialize sentence-transformers model (`all-MiniLM-L6-v2`)
+- [ ] Set up persistent ChromaDB client and create collection
+- [ ] Convert text chunks to vector embeddings
+- [ ] Store embeddings + metadata in ChromaDB
+
+### ⏳ Level 5: Retrieval Logic
+- [ ] Implement question embedding in `/chat/` endpoint
+- [ ] Query ChromaDB with question vector
+- [ ] Retrieve top 3 most relevant text chunks
+- [ ] Return retrieved context
+
+### ⏳ Level 6: Generation Logic (RAG)
+- [ ] Construct prompt with retrieved context + user question
+- [ ] Integrate OpenAI API call
+- [ ] Generate final answer using LLM
+- [ ] Return structured response
+
+### ⏳ Level 7: Full Integration & Testing
+- [ ] Connect all components from Levels 3-6
+- [ ] Replace placeholder logic with full implementation
+- [ ] Test end-to-end flow using FastAPI Swagger docs
+- [ ] Handle error cases and edge scenarios
+
 ## 🚀 Getting Started
 
 ### Prerequisites
